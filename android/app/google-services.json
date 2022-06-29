@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "321735861258",
+    "project_id": "fir-demo-99d40",
+    "storage_bucket": "fir-demo-99d40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321735861258:android:a896c87aaf1fb5c5702bf3",
+        "android_client_info": {
+          "package_name": "com.firebasecrud"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "321735861258-50dtq7v8l77qrt2fo5te2cde52cpjb56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAivFQzAMNVWed_F32mMInY43OctflkIwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "321735861258-50dtq7v8l77qrt2fo5te2cde52cpjb56.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "321735861258-kjurcjfu0oia194djttlui80q22fiorm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.FirebaseCRUD"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:321735861258:android:0e45341804fdd597702bf3",
+        "android_client_info": {
+          "package_name": "com.responsivedesign"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "321735861258-67hu05md8uslecg64domded6eafvpkrq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.responsivedesign",
+            "certificate_hash": "b08b4a53f923c0cf120b3c0eace1a00bd24c7afe"
+          }
+        },
+        {
+          "client_id": "321735861258-50dtq7v8l77qrt2fo5te2cde52cpjb56.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAivFQzAMNVWed_F32mMInY43OctflkIwU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "321735861258-50dtq7v8l77qrt2fo5te2cde52cpjb56.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "321735861258-kjurcjfu0oia194djttlui80q22fiorm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.FirebaseCRUD"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
