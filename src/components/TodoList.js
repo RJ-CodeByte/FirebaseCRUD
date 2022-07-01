@@ -16,8 +16,9 @@ class TodoList extends React.Component {
 
     render() {
         const list = this.props.list
-        const completedCount = list.todos.filter(todo => todo.completed).length;
-        const remainingCount = list.todos.length - completedCount
+        console.log('list', list)
+        const completedCount = list.todos?.filter(todo => todo.completed).length ?? 0;
+        const remainingCount = list.todos?.length === undefined ? (list.todos?.length ?? 0 - completedCount) : (list.todos?.length - completedCount)
         return (
             <>
                 <Modal animationType='slide' visible={this.state.showListVisible} onRequestClose={() => this.toggleListModal()}>

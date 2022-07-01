@@ -9,7 +9,6 @@ import {
 import React from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import colors, { backgroundColors } from '../constants/colors';
-import tempData from '../constants/tempData';
 import { btnTitle, createTodoList } from '../constants/strings';
 
 class AddListModal extends React.Component {
@@ -25,7 +24,7 @@ class AddListModal extends React.Component {
         //     color,
         //     todos: []
         // })
-        const list = { name, color }
+        const list = { name, color, todos: [] }
         this.props.addList(list);
         this.setState({ name: '' });
         this.props.onPress();

@@ -6,13 +6,16 @@ import {
     TouchableOpacity,
     FlatList,
     KeyboardAvoidingView,
-    Keyboard
+    Keyboard,
+    Animated,
+    TextInput
 } from 'react-native';
 import React, { Component } from 'react';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import colors, { backgroundColors } from '../constants/colors';
-import { TextInput } from 'react-native-gesture-handler';
+import { Swipeable } from 'react-native-gesture-handler';
+import { Lists } from '../constants/strings';
 
 export default class TodoModal extends Component {
     state = {
@@ -31,48 +34,84 @@ export default class TodoModal extends Component {
         this.props.updateList(list);
     }
 
-    addTodo = (index) => {
+    addTodo = () => {
         let list = this.props.list
-        list.todos.push({
+        list.todos === undefined ? list.todos = [{
             title: this.state.newTodo,
             completed: false
-        })
+        }] :
+            list.todos.push({
+                title: this.state.newTodo,
+                completed: false
+            })
         this.props.updateList(list);
         this.setState({ newTodo: "" })
         Keyboard.dismiss()
     }
 
+    deleteToDo = index => {
+        let list = this.props.list
+        list.todos.splice(index, 1);
+        this.props.updateList(list)
+    }
+
     renderTodo = (todo, index) => {
         return (
-            <View style={styles.todoContainer}>
-                <TouchableOpacity onPress={() => this.toggleTodoCompleted(index)}>
-                    <Ionicons
-                        name={todo.completed ? 'ios-square' : 'ios-square-outline'}
-                        size={24}
-                        color={colors.grey}
-                        style={{ width: 32 }}
-                    />
-                </TouchableOpacity>
-                <Text
-                    style={[
-                        styles.todo,
-                        {
-                            textDecorationLine: todo.completed ? 'line-through' : 'none',
-                            color: todo.completed ? colors.grey : colors.black,
-                        },
-                    ]}>
-                    {todo.title}
-                </Text>
-            </View>
+            <Swipeable renderRightActions={(_, dragX) => this.rightActions(dragX, index)}>
+                <View style={styles.todoContainer}>
+                    <TouchableOpacity onPress={() => this.toggleTodoCompleted(index)}>
+                        <Ionicons
+                            name={todo.completed ? 'ios-square' : 'ios-square-outline'}
+                            size={24}
+                            color={colors.grey}
+                            style={{ width: 32 }}
+                        />
+                    </TouchableOpacity>
+                    <Text
+                        style={[
+                            styles.todo,
+                            {
+                                textDecorationLine: todo.completed ? 'line-through' : 'none',
+                                color: todo.completed ? colors.grey : colors.black,
+                            },
+                        ]}>
+                        {todo.title}
+                    </Text>
+                </View>
+            </Swipeable>
         );
     };
 
+
+    rightActions = (dragX, index) => {
+        const scale = dragX.interpolate({
+            inputRange: [-100, 0],
+            outputRange: [1, 0.9],
+            extrapolate: "clamp"
+        })
+
+
+        const opacity = dragX.interpolate({
+            inputRange: [-100, -20, 0],
+            outputRange: [1, 0.9, 0],
+            extrapolate: "clamp"
+        })
+
+
+
+        return <TouchableOpacity onPress={() => this.deleteToDo(index)}>
+            <Animated.View style={[styles.deleteButton, { opacity: opacity }]}>
+                <Animated.Text style={{ color: colors.white, fontWeight: "800", transform: [{ scale }] }}>Delete</Animated.Text>
+            </Animated.View>
+        </TouchableOpacity>
+    }
+
     render() {
         const list = this.props.list
-        const taskCount = list.todos.length;
-        const completedCount = list.todos.filter(
+        const taskCount = list.todos?.length ?? 0;
+        const completedCount = list.todos?.filter(
             todo => todo.completed,
-        ).length;
+        ).length ?? 0;
         return (
             <KeyboardAvoidingView style={{ flex: 1 }}
                 behavior="padding">
@@ -97,12 +136,11 @@ export default class TodoModal extends Component {
                         </View>
                     </View>
 
-                    <View style={[styles.section, { flex: 3 }]}>
+                    <View style={[styles.section, { flex: 3, marginVertical: 16 }]}>
                         <FlatList
                             data={list.todos}
-                            keyExtractor={item => item.title}
+                            keyExtractor={(__, index) => index.toString()}
                             renderItem={({ item, index }) => this.renderTodo(item, index)}
-                            contentContainerStyle={{ paddingHorizontal: 32, paddingVertical: 64 }}
                             showsVerticalScrollIndicator={false}
                         />
                     </View>
@@ -130,12 +168,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     section: {
-        flex: 1,
+        // flex: 1,
         alignSelf: 'stretch',
     },
     header: {
         justifyContent: 'flex-end',
         marginLeft: 64,
+        paddingTop: '5%',
         borderBottomWidth: 3,
     },
     title: {
@@ -172,8 +211,16 @@ const styles = StyleSheet.create({
         paddingVertical: 16,
         flexDirection: 'row',
         alignItems: 'center',
+        paddingLeft: '8%'
     }, todo: {
         fontSize: 15,
         fontWeight: '700'
+    },
+    deleteButton: {
+        flex: 1,
+        backgroundColor: colors.red,
+        justifyContent: "center",
+        alignItems: "center",
+        width: 80,
     }
 });
