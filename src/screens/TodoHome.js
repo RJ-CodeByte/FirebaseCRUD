@@ -78,13 +78,12 @@ class TodoHome extends Component {
         }
         return (
             <View style={styles.container}>
-                {/* <Image source={{ uri: 'yin_yang' }} style={{ height: 100, width: 100 }} /> */}
+                <Image source={{ uri: 'yin_yang' }} style={{ height: 100, width: 100 }} />
                 <Modal animationType='slide' visible={this.state.addTodoVisible} onRequestClose={() => this.toggleAddTodoModal()}>
                     <AddListModal onPress={() => this.toggleAddTodoModal()} addList={this.addList} />
                 </Modal>
 
                 <View>
-                    {/* <Text>User: {this.state.user.uid}</Text> */}
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={styles.divider} />
