@@ -1,20 +1,17 @@
-import types from "../types";
+import { backgroundColors } from "../constants/colors";
+import types from "../redux/types";
 
 
 const initialState = {
-    token: null,
-    isLoading: false,
-    users: []
+    loading: true,
+    user: {},
+    list: []
 }
 
 function todoReducer(state = initialState, action) {
     switch (action.type) {
-        case types.LOGIN:
-            return { ...state, token: action.payload };
-        case types.IS_LOADING:
-            return { ...state, isLoading: action.payload };
-        case types.USER_LIST:
-            return { ...state, users: action.payload };
+        case types.ADD:
+            return { ...state, list: action.list, user: action.user, loading: false };
         default:
             return state;
     }

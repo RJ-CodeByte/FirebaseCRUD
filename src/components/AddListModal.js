@@ -105,6 +105,7 @@ const styles = StyleSheet.create({
     },
     colorSelect: {
         width: 30,
-        height: 30, borderRadius: 4
+        height: 30,
+        borderRadius: 4
     }
 });

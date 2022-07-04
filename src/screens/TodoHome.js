@@ -7,16 +7,15 @@ import TodoList from '../components/TodoList';
 import AddListModal from '../components/AddListModal';
 import { AddLst, Lists, Todo } from '../constants/strings';
 import FireConfig from '../config/FireConfig';
+import { connect } from 'react-redux';
+import { AddTodo } from '../redux/actions';
 
 
 
 
-export default class TodoHome extends Component {
+class TodoHome extends Component {
     state = {
         addTodoVisible: false,
-        lists: [],
-        loading: true,
-        user: {}
     }
 
 
@@ -25,16 +24,13 @@ export default class TodoHome extends Component {
             if (error) {
                 alert("Something Went Wrong")
             }
-            console.log('user', user)
 
             fireBase.getLists(lists => {
-                this.setState({ lists, user }, () => {
-                    this.setState({ loading: false })
-                })
+                // this.setState({ lists, user }, () => {
+                //     this.setState({ loading: false })
+                // })
+                this.props.addTodos(lists, user)
             })
-
-
-            this.setState({ user })
         });
     }
 
@@ -50,11 +46,7 @@ export default class TodoHome extends Component {
 
 
     addList = list => {
-        // this.setState({ lists: [...this.state.lists, { ...list, id: this.state.lists.length + 1, todos: [] }] })
-        let task = {
-            title: '',
-            completed: ''
-        }
+        // this.setState({ lists: [...this.state.lists, { ...list, id: this.state.lists.length + 1, todos: [] }] })      
         fireBase.addList({
             name: list.name,
             color: list.color,
@@ -77,7 +69,7 @@ export default class TodoHome extends Component {
     }
 
     render() {
-        if (this.state.loading) {
+        if (this.props.loading) {
             return (
                 <View style={styles.container}>
                     <ActivityIndicator size={"large"} color={colors.blue} />
@@ -92,7 +84,7 @@ export default class TodoHome extends Component {
                 </Modal>
 
                 <View>
-                    <Text>User: {this.state.user.uid}</Text>
+                    {/* <Text>User: {this.state.user.uid}</Text> */}
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <View style={styles.divider} />
@@ -116,7 +108,7 @@ export default class TodoHome extends Component {
                     <FlatList
                         horizontal
                         keyExtractor={(_, index) => index.toString()}
-                        data={this.state.lists}
+                        data={this.props.list}
                         showsHorizontalScrollIndicator={false}
                         renderItem={({ item }) => this.renderList(item)}
                         keyboardShouldPersistTaps='always'
@@ -162,3 +154,21 @@ const styles = StyleSheet.create({
         marginTop: '2%'
     }
 });
+
+const mapStateToProps = (state) => {
+    return {
+        list: state.todoReducer.list,
+        loading: state.todoReducer.loading
+    }
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addTodos: (name, color, todos) => dispatch(AddTodo(name, color, todos))
+    }
+}
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(TodoHome)

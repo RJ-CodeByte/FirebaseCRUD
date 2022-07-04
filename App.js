@@ -4,14 +4,18 @@ import { NavigationContainer } from '@react-navigation/native';
 import TodoStack from './src/navigations/TodoStack';
 import { createStackNavigator } from '@react-navigation/stack';
 import TodoHome from './src/screens/TodoHome';
+import { Provider } from 'react-redux';
+import { Store } from './src/redux/store';
 
 
 const Stack = createStackNavigator();
 export default function App() {
   return (
+    <Provider store={Store}>
     <NavigationContainer>
       <TodoStack />
     </NavigationContainer>
+    </Provider>
   )
 }
 
